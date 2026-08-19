@@ -5,11 +5,10 @@ import { Flame, ShieldCheck, Zap, Sparkles } from 'lucide-react';
 export default function LegacySection() {
   const transformationData = [
     {
-      title: "The Scramble Era",
-      subtitle: "Before He Took Over",
-      description: "Scattered parts on tables, fried microcontrollers at 11 PM, and hoping the bot wouldn't fall apart on stage during the first round.",
+      title: "The Ground Work",
+      subtitle: "Before His Presidency",
+      description: "A small society with potential, facing tight deadlines, limited workshop hours, and uncoordinated build sessions ahead of massive national competitions.",
       status: "BEFORE",
-      highlight: "Last-Minute Panic",
       iconColor: "text-rose/70",
       borderColor: "border-rose/30"
     },
@@ -18,7 +17,6 @@ export default function LegacySection() {
       subtitle: "Under BURRRAFFAY",
       description: "Clean wiring, autonomous code that actually executes, late night workshops, and bringing back first-place hardware every single weekend.",
       status: "THE ERA",
-      highlight: "Trophies & Sweep Wins",
       iconColor: "text-gold",
       borderColor: "border-gold/60",
       featured: true
@@ -111,14 +109,9 @@ export default function LegacySection() {
               <h3 className="font-serif font-bold text-2xl text-cream mb-1">{item.title}</h3>
               <p className="text-xs font-mono text-gold/80 mb-4">{item.subtitle}</p>
 
-              <p className="font-sans text-cream/70 text-sm leading-relaxed mb-6 font-light">
+              <p className="font-sans text-cream/70 text-sm leading-relaxed font-light">
                 {item.description}
               </p>
-
-              <div className="pt-4 border-t border-gold/15 flex items-center justify-between text-xs font-mono text-gold-light">
-                <span>The Vibe:</span>
-                <span className="font-semibold text-rose-light">{item.highlight}</span>
-              </div>
             </motion.div>
           ))}
         </div>

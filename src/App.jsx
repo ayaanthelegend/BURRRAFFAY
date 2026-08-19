@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Preloader from './components/Preloader';
 import ParticleCanvas from './components/ParticleCanvas';
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
@@ -11,6 +12,7 @@ import LightboxModal from './components/LightboxModal';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('hero');
+  const [isPreloaderFinished, setIsPreloaderFinished] = useState(false);
   const [modalState, setModalState] = useState({
     isOpen: false,
     imageSrc: '',
@@ -53,6 +55,11 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-burgundy-darker text-cream selection:bg-gold selection:text-burgundy-dark font-sans overflow-x-hidden">
+      {/* Full-Screen Preloader */}
+      {!isPreloaderFinished && (
+        <Preloader onComplete={() => setIsPreloaderFinished(true)} />
+      )}
+
       {/* Dynamic Floating Particles & Glow Canvas */}
       <ParticleCanvas />
 

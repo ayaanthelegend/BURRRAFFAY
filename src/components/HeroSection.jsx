@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Trophy, ChevronDown, Maximize2 } from 'lucide-react';
 
-export default function HeroSection({ onOpenImage }) {
+export default function HeroSection({ onOpenImage, isReady = true }) {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
       {/* Glow Orbs background layers */}
@@ -19,7 +19,7 @@ export default function HeroSection({ onOpenImage }) {
           {/* Left Column: Authentic Copy */}
           <motion.div 
             initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
+            animate={isReady ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="lg:col-span-7 space-y-6 text-center lg:text-left"
           >
@@ -75,7 +75,7 @@ export default function HeroSection({ onOpenImage }) {
           {/* Right Column: Stylized Portrait Frame */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            animate={isReady ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.9, y: 30 }}
             transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
             className="lg:col-span-5 flex flex-col items-center justify-center relative"
           >

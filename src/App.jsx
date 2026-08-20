@@ -68,7 +68,7 @@ export default function App() {
 
       {/* Page Sections */}
       <main className="relative z-10 space-y-0">
-        <HeroSection onOpenImage={handleOpenImage} />
+        <HeroSection onOpenImage={handleOpenImage} isReady={isPreloaderFinished} />
         <LegacySection />
         <AwardsSection onOpenImage={handleOpenImage} />
         <LateNightsSection />

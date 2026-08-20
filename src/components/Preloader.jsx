@@ -8,7 +8,7 @@ const IMAGES_TO_PRELOAD = [
   '/images/burr_burgers.webp'
 ];
 
-const AUDIO_TO_PRELOAD = '/sound.ogg';
+const AUDIO_TO_PRELOAD = '/sound.mp3';
 
 const MIN_DISPLAY_TIME = 1400; // 1.4s minimum for smooth cinematic experience
 const MAX_LOADING_TIMEOUT = 10000; // 10s maximum timeout safeguard

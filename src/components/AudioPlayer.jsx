@@ -1,17 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Volume2, VolumeX, Play } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 
 export default function AudioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
-    // Initialize audio element with uploaded sound.ogg
-    const audio = new Audio('/sound.ogg');
-    audio.loop = false; // MUST NOT LOOP - plays only once
+    // Universal MP3 audio element for cross-device support (iOS Safari, Android, Desktop)
+    const audio = new Audio('/sound.mp3');
+    audio.loop = true; // Loop continuous ambient music
+    audio.volume = 0.9;
 
     audio.onended = () => {
       setIsPlaying(false);
+    };
+
+    audio.onerror = (e) => {
+      console.warn("Primary MP3 audio load error, trying OGG fallback:", e);
+      if (audioRef.current && audioRef.current.src.endsWith('.mp3')) {
+        audioRef.current.src = '/sound.ogg';
+      }
     };
 
     audioRef.current = audio;
@@ -24,17 +32,23 @@ export default function AudioPlayer() {
     };
   }, []);
 
-  const toggleSound = () => {
+  const toggleSound = (e) => {
+    e.preventDefault();
     const audio = audioRef.current;
     if (!audio) return;
 
     if (!isPlaying) {
-      audio.currentTime = 0; // Play from beginning
-      audio.play().then(() => {
-        setIsPlaying(true);
-      }).catch(err => {
-        console.warn("Audio playback error:", err);
-      });
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch((err) => {
+            console.warn("Audio playback error:", err);
+            setIsPlaying(false);
+          });
+      }
     } else {
       audio.pause();
       setIsPlaying(false);
@@ -44,8 +58,8 @@ export default function AudioPlayer() {
   return (
     <button
       onClick={toggleSound}
-      title={isPlaying ? "Pause Sound" : "Play Sound (Plays Once)"}
-      className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gold/40 bg-burgundy/80 hover:bg-burgundy-light text-gold text-xs font-medium transition-all shadow-gold-glow backdrop-blur-md group"
+      title={isPlaying ? "Pause Music" : "Play Cinematic Music"}
+      className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gold/40 bg-burgundy/80 hover:bg-burgundy-light text-gold text-xs font-medium transition-all shadow-gold-glow backdrop-blur-md group cursor-pointer"
     >
       {isPlaying ? (
         <>

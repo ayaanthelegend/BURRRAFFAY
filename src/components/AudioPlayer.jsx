@@ -8,15 +8,15 @@ export default function AudioPlayer() {
   useEffect(() => {
     // Universal MP3 audio element for cross-device support (iOS Safari, Android, Desktop)
     const audio = new Audio('/sound.mp3');
-    audio.loop = true; // Loop continuous ambient music
-    audio.volume = 0.9;
+    audio.loop = false; // MUST PLAY ONLY ONCE PER CLICK
+    audio.volume = 1.0;
 
     audio.onended = () => {
       setIsPlaying(false);
     };
 
-    audio.onerror = (e) => {
-      console.warn("Primary MP3 audio load error, trying OGG fallback:", e);
+    audio.onerror = () => {
+      // Fallback to sound.ogg if MP3 fails on legacy browsers
       if (audioRef.current && audioRef.current.src.endsWith('.mp3')) {
         audioRef.current.src = '/sound.ogg';
       }
@@ -38,6 +38,7 @@ export default function AudioPlayer() {
     if (!audio) return;
 
     if (!isPlaying) {
+      audio.currentTime = 0; // Rewind to start for a fresh play once per click
       const playPromise = audio.play();
       if (playPromise !== undefined) {
         playPromise
@@ -51,6 +52,7 @@ export default function AudioPlayer() {
       }
     } else {
       audio.pause();
+      audio.currentTime = 0;
       setIsPlaying(false);
     }
   };
@@ -58,7 +60,7 @@ export default function AudioPlayer() {
   return (
     <button
       onClick={toggleSound}
-      title={isPlaying ? "Pause Music" : "Play Cinematic Music"}
+      title={isPlaying ? "Stop Music" : "Play Music (Plays Once)"}
       className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gold/40 bg-burgundy/80 hover:bg-burgundy-light text-gold text-xs font-medium transition-all shadow-gold-glow backdrop-blur-md group cursor-pointer"
     >
       {isPlaying ? (
